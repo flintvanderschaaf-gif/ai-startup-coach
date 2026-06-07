@@ -858,11 +858,49 @@
         ).join('');
       }
 
-      if (data.eerste_stap) {
+      const res = document.getElementById('result-section');
+
+      // Wat is het
+      if (data.wat_is_het) {
         const el = document.createElement('p');
-        el.style.cssText = 'margin-top:16px;padding:12px 16px;background:#f0f7ff;border-radius:10px;font-size:0.9rem;color:#1a2332;border-left:3px solid #3b82f6;text-align:left;';
-        el.innerHTML = '<strong>Eerste stap:</strong> ' + data.eerste_stap;
-        document.getElementById('result-section').appendChild(el);
+        el.style.cssText = 'margin-top:12px;font-size:0.95rem;color:#444;line-height:1.6;';
+        el.innerHTML = '<strong>Wat is dit?</strong> ' + data.wat_is_het;
+        res.appendChild(el);
+      }
+
+      // Verdien potentieel
+      if (data.verdien_potentieel) {
+        const el = document.createElement('div');
+        el.style.cssText = 'margin-top:12px;padding:12px 16px;background:#f0fdf4;border-radius:10px;font-size:0.9rem;color:#166534;border-left:3px solid #22c55e;text-align:left;';
+        el.innerHTML = '<strong>💰 Verdienpotentieel:</strong> ' + data.verdien_potentieel;
+        res.appendChild(el);
+      }
+
+      // Risico
+      if (data.risico) {
+        const kleur = data.risico === 'laag' ? '#f0fdf4' : data.risico === 'gemiddeld' ? '#fffbeb' : '#fef2f2';
+        const rand = data.risico === 'laag' ? '#22c55e' : data.risico === 'gemiddeld' ? '#f59e0b' : '#ef4444';
+        const tekstkleur = data.risico === 'laag' ? '#166534' : data.risico === 'gemiddeld' ? '#92400e' : '#991b1b';
+        const el = document.createElement('div');
+        el.style.cssText = 'margin-top:12px;padding:12px 16px;background:' + kleur + ';border-radius:10px;font-size:0.9rem;color:' + tekstkleur + ';border-left:3px solid ' + rand + ';text-align:left;';
+        el.innerHTML = '<strong>⚠️ Risico: ' + data.risico + '</strong> — ' + (data.risico_uitleg || '');
+        res.appendChild(el);
+      }
+
+      // Stappen
+      if (data.stappen && data.stappen.length) {
+        const el = document.createElement('div');
+        el.style.cssText = 'margin-top:12px;padding:12px 16px;background:#f0f7ff;border-radius:10px;text-align:left;';
+        el.innerHTML = '<strong>📅 Jouw stappenplan:</strong><ol style="margin-top:8px;padding-left:18px;font-size:0.9rem;color:#1a2332;line-height:1.8">' + data.stappen.map(s => '<li>' + s + '</li>').join('') + '</ol>';
+        res.appendChild(el);
+      }
+
+      // Eerste stap
+      if (data.eerste_stap) {
+        const el = document.createElement('div');
+        el.style.cssText = 'margin-top:12px;padding:12px 16px;background:#faf5ff;border-radius:10px;font-size:0.9rem;color:#6b21a8;border-left:3px solid #a855f7;text-align:left;';
+        el.innerHTML = '<strong>🚀 Doe dit vandaag:</strong> ' + data.eerste_stap;
+        res.appendChild(el);
       }
 
     } catch (err) {
