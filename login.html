@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inloggen — AI Startup Coach</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #f7f9fc; color: #1a2332; font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; }
@@ -18,19 +17,26 @@
   <div id="clerk-sign-in"></div>
 
   <script>
-    const clerkPubKey = 'pk_test_aGFwcHktc3dhbi04NC5jbGVyay5hY2NvdW50cy5kZXYk';
+    async function initClerk() {
+      const clerkPubKey = 'JOUW_PUBLISHABLE_KEY_HIER';
 
-    const clerk = new Clerk(clerkPubKey);
-    clerk.load().then(() => {
-      if (clerk.user) {
-        window.location.href = 'index.html';
-      } else {
-        clerk.mountSignIn(document.getElementById('clerk-sign-in'), {
-          afterSignInUrl: 'index.html',
-          afterSignUpUrl: 'index.html',
-        });
-      }
-    });
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/@clerk/clerk-js@latest/dist/clerk.browser.js';
+      script.onload = async function() {
+        const clerk = new window.Clerk(clerkPubKey);
+        await clerk.load();
+        if (clerk.user) {
+          window.location.href = 'index.html';
+        } else {
+          clerk.mountSignIn(document.getElementById('clerk-sign-in'), {
+            afterSignInUrl: 'index.html',
+            afterSignUpUrl: 'index.html',
+          });
+        }
+      };
+      document.head.appendChild(script);
+    }
+    initClerk();
   </script>
 </body>
 </html>
