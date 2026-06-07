@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inloggen — AI Startup Coach</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f7f9fc; color: #1a2332; font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: #3b82f6; margin-bottom: 40px; text-decoration: none; }
+    #clerk-sign-in { width: 100%; max-width: 420px; }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="logo">AI Startup Coach</a>
+  <div id="clerk-sign-in"></div>
+
+  <script>
+    const clerkPubKey = 'pk_test_aGFwcHktc3dhbi04NC5jbGVyay5hY2NvdW50cy5kZXYk';
+
+    const clerk = new Clerk(clerkPubKey);
+    clerk.load().then(() => {
+      if (clerk.user) {
+        window.location.href = 'index.html';
+      } else {
+        clerk.mountSignIn(document.getElementById('clerk-sign-in'), {
+          afterSignInUrl: 'index.html',
+          afterSignUpUrl: 'index.html',
+        });
+      }
+    });
+  </script>
+</body>
+</html>
