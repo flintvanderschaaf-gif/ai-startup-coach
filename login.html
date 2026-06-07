@@ -8,6 +8,13 @@
 <script
   defer
   crossorigin="anonymous"
+  src="https://happy-swan-84.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js"
+  type="text/javascript">
+</script>
+
+<script
+  defer
+  crossorigin="anonymous"
   data-clerk-publishable-key="pk_test_aGFwcHktc3dhbi04NC5jbGVyay5hY2NvdW50cy5kZXYk"
   src="https://happy-swan-84.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js"
   type="text/javascript">
@@ -16,12 +23,10 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #f7f9fc; color: #1a2332; font-family: 'DM Sans', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; }
     .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: #3b82f6; margin-bottom: 40px; text-decoration: none; }
-    #sign-in { width: 100%; max-width: 420px; }
   </style>
 </head>
 <body>
   <a href="index.html" class="logo">AI Startup Coach</a>
-  <div id="sign-in"></div>
 
   <script>
     window.addEventListener('load', async function() {
@@ -29,9 +34,9 @@
       if (window.Clerk.user) {
         window.location.href = 'index.html';
       } else {
-        window.Clerk.mountSignIn(document.getElementById('sign-in'), {
-          afterSignInUrl: 'index.html',
-          afterSignUpUrl: 'index.html',
+        window.Clerk.openSignIn({
+          afterSignInUrl: window.location.origin + '/index.html',
+          afterSignUpUrl: window.location.origin + '/index.html',
         });
       }
     });
